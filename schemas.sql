@@ -28,13 +28,13 @@ CREATE TABLE Recurso (
 CREATE TABLE Produto (
     id_produto INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100) NOT NULL,
-    preco DECIMAL(10, 2) NOT NULL CHECK (preco >= 0)
+    preco DECIMAL(10, 2) NOT NULL CHECK (preco > 0)
 );
 
 CREATE TABLE Local (
     id_local INT PRIMARY KEY AUTO_INCREMENT,
     logradouro VARCHAR(100) NOT NULL,
-    numero VARCHAR(10) NOT NULL,
+    numero VARCHAR(10),
     complemento VARCHAR(100),
     bairro VARCHAR(50) NOT NULL
 );
@@ -54,7 +54,16 @@ CREATE TABLE Grupo_Maracatu (
 
 CREATE TABLE Departamento (
     id_departamento INT PRIMARY KEY AUTO_INCREMENT,
-    descricao VARCHAR(100) NOT NULL UNIQUE
+    descricao ENUM(
+        'Artístico',
+        'Logística',
+        'Financeiro',
+        'Marketing',
+        'Produção',
+        'Jurídico',
+        'Recursos Humanos',
+        'Infraestrutura'
+    ) NOT NULL UNIQUE
 );
 
 -- tabelas de especialização de Pessoa

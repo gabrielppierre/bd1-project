@@ -1,7 +1,7 @@
 CREATE DATABASE IF NOT EXISTS maracatu;
 USE maracatu;
 
--- Criação das tabelas base (sem dependências externas)
+-- criação das tabelas base (sem dependencias externas)
 CREATE TABLE Pessoa (
     id_pessoa INT PRIMARY KEY AUTO_INCREMENT,
     telefone VARCHAR(20) NOT NULL,
@@ -57,7 +57,7 @@ CREATE TABLE Departamento (
     descricao VARCHAR(100) NOT NULL UNIQUE
 );
 
--- Tabelas de especialização de Pessoa
+-- tabelas de especialização de Pessoa
 CREATE TABLE Pessoa_Fisica (
     id_pessoa INT PRIMARY KEY,
     cpf VARCHAR(14) NOT NULL UNIQUE,
@@ -79,7 +79,7 @@ CREATE TABLE Espaco (
     coordenadas_x FLOAT NOT NULL
 );
 
--- Especializações de Pessoa_Fisica
+-- especializações de Pessoa_Fisica
 CREATE TABLE Tecnico (
     id_pessoa INT PRIMARY KEY,
     especializacao VARCHAR(100) NOT NULL,
@@ -105,20 +105,20 @@ CREATE TABLE Integrante_Maracatu (
     FOREIGN KEY (id_pessoa) REFERENCES Pessoa_Fisica(id_pessoa) ON DELETE CASCADE
 );
 
--- Especializações de Pessoa_Juridica
+-- especializaçoes de Pessoa_Juridica
 CREATE TABLE Vendedor (
     id_pessoa INT PRIMARY KEY,
-    inscricao_municipal VARCHAR(20) NOT NULL UNIQUE,  -- Adicionado UNIQUE aqui
+    inscricao_municipal VARCHAR(20) NOT NULL UNIQUE,
     FOREIGN KEY (id_pessoa) REFERENCES Pessoa_Juridica(id_pessoa) ON DELETE CASCADE
 );
 
 CREATE TABLE Patrocinador (
     id_pessoa INT PRIMARY KEY,
-    contrapartida_esperada VARCHAR(200),  -- Removido NOT NULL aqui
+    contrapartida_esperada VARCHAR(200),
     FOREIGN KEY (id_pessoa) REFERENCES Pessoa_Juridica(id_pessoa) ON DELETE CASCADE
 );
 
--- Tabelas de relacionamentos
+-- tabelas de relacionamentos
 CREATE TABLE Apresenta (
     id_evento INT,
     id_grupo INT,
@@ -127,7 +127,7 @@ CREATE TABLE Apresenta (
     PRIMARY KEY (id_evento, id_grupo, ordem_apresentacao),
     FOREIGN KEY (id_evento) REFERENCES Evento(id_evento) ON DELETE CASCADE,
     FOREIGN KEY (id_grupo) REFERENCES Grupo_Maracatu(id_grupo) ON DELETE CASCADE,
-    UNIQUE (id_evento, ordem_apresentacao)  -- Garantir que cada evento tenha ordens únicas
+    UNIQUE (id_evento, ordem_apresentacao)  -- garantir que as apresentações dos grupos n se sobreponham 
 );
 
 CREATE TABLE Avalia (
@@ -195,7 +195,7 @@ CREATE TABLE Reserva (
     FOREIGN KEY (id_evento) REFERENCES Evento(id_evento) ON DELETE CASCADE,
     FOREIGN KEY (id_local) REFERENCES Local(id_local) ON DELETE CASCADE,
     CHECK (hora_final > hora_inicio),
-    UNIQUE (id_local, data, hora_inicio, hora_final)  -- Evitar sobreposição de eventos no mesmo local
+    UNIQUE (id_local, data, hora_inicio, hora_final)  -- evitar sobreposiçao dos eventos no mesmo local
 );
 
 CREATE TABLE Organiza (
